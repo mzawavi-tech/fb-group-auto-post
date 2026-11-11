@@ -2,7 +2,7 @@
 
 Standalone system for campaign management, AI-assisted content, Facebook group directory, scheduling workflows, and verified posting-status tracking.
 
-- **Status:** Backend foundation in progress
+- **Status:** API foundation and first Campaign Management endpoints committed
 - **Target dashboard:** fbpost.referly.my (after DNS/TLS setup)
 - **Infrastructure:** Reuse existing VPS; no new hosting purchase.
 - **Isolation:** Separate deployment/database from Referly and GPTWORKPRO.
@@ -10,13 +10,20 @@ Standalone system for campaign management, AI-assisted content, Facebook group d
 ## Current API foundation
 - Node.js 20+, TypeScript, Express
 - Helmet security headers, CORS allowlist, structured request logging
-- Environment validation with Zod
-- JSON 404 and centralized error responses
-- Health endpoint: `GET /api/health`
-- Graceful shutdown on SIGTERM/SIGINT
+- Zod environment validation
+- PostgreSQL connection pool and initial schema migration
+- Campaign CRUD API with input validation
+- JSON 404, centralized error responses, graceful shutdown
+- Health endpoint with database readiness status
 
-## V1 modules
-Dashboard/authentication; campaigns; AI content drafts; group directory and allowlist; scheduler and queue; duplicate prevention; bounded retries; posting history; audit logs; CSV export.
+## Campaign endpoints
+- `GET /api/campaigns`
+- `POST /api/campaigns`
+- `GET /api/campaigns/:id`
+- `PATCH /api/campaigns/:id`
+- `DELETE /api/campaigns/:id`
+
+See [Development setup](docs/DEVELOPMENT.md) for configuration and examples.
 
 ## Publishing guardrails
 Use supported Meta interfaces and permissions where available. Keep group publishing disabled until a currently supported and permitted route is verified. Never bypass login challenges, CAPTCHA, checkpoints, rate limits, access controls, or group rules. Never claim success without verified destination confirmation.
@@ -28,5 +35,4 @@ Use supported Meta interfaces and permissions where available. Keep group publis
 - [Roadmap](docs/ROADMAP.md)
 - [Development setup](docs/DEVELOPMENT.md)
 
-## Development
-See [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md). The code has not yet been built or run in a live runtime; deployment remains pending VPS inspection.
+**Verification status:** Changes are committed to GitHub, but installation, typecheck, build, database migration, and runtime tests are still pending in a real Node.js/PostgreSQL environment.
