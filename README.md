@@ -2,10 +2,18 @@
 
 Standalone system for campaign management, AI-assisted content, Facebook group directory, scheduling workflows, and verified posting-status tracking.
 
-- **Status:** V1 requirements baseline
+- **Status:** Backend foundation in progress
 - **Target dashboard:** fbpost.referly.my (after DNS/TLS setup)
 - **Infrastructure:** Reuse existing VPS; no new hosting purchase.
 - **Isolation:** Separate deployment/database from Referly and GPTWORKPRO.
+
+## Current API foundation
+- Node.js 20+, TypeScript, Express
+- Helmet security headers, CORS allowlist, structured request logging
+- Environment validation with Zod
+- JSON 404 and centralized error responses
+- Health endpoint: `GET /api/health`
+- Graceful shutdown on SIGTERM/SIGINT
 
 ## V1 modules
 Dashboard/authentication; campaigns; AI content drafts; group directory and allowlist; scheduler and queue; duplicate prevention; bounded retries; posting history; audit logs; CSV export.
@@ -18,5 +26,7 @@ Use supported Meta interfaces and permissions where available. Keep group publis
 - [Architecture](docs/ARCHITECTURE.md)
 - [Data model](docs/DATA-MODEL.md)
 - [Roadmap](docs/ROADMAP.md)
+- [Development setup](docs/DEVELOPMENT.md)
 
-Next: inspect existing VPS runtime and select the implementation stack before coding.
+## Development
+See [docs/DEVELOPMENT.md](docs/DEVELOPMENT.md). The code has not yet been built or run in a live runtime; deployment remains pending VPS inspection.
