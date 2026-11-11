@@ -5,9 +5,9 @@
   "description": "Standalone campaign and publishing workflow manager",
   "scripts": {
     "dev": "tsx watch src/server.ts",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
     "build": "tsc -p tsconfig.json",
-    "start": "node dist/server.js",
-    "typecheck": "tsc --noEmit -p tsconfig.json"
+    "start": "node dist/server.js"
   },
   "engines": { "node": ">=20" },
   "dependencies": {
@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
-    "@types/express": "^5.0.0",
+    "@types/express": "^4.17.21",
     "@types/node": "^22.13.4",
     "tsx": "^4.19.3",
     "typescript": "^5.7.3"
