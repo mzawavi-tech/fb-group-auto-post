@@ -5,23 +5,21 @@
 - [x] V1 requirements and architecture baseline
 - [x] Existing VPS reuse and application isolation recorded
 
-## Milestone 1 — API foundation
+## Milestone 1 — API and data foundation
 - [x] Node.js 20+ / TypeScript / Express API scaffold
 - [x] Zod environment validation wired into server startup
-- [x] CORS allowlist and Helmet security headers
-- [x] Structured HTTP request logging
-- [x] JSON 404 and centralized error response
-- [x] Health endpoint with runtime metadata
-- [x] Graceful shutdown handlers
+- [x] CORS allowlist, Helmet security headers, structured request logging
+- [x] JSON 404, centralized error response, graceful shutdown
+- [x] Health endpoint with database readiness
+- [x] PostgreSQL connection pool configuration
+- [x] Initial PostgreSQL schema and migration runner
+- [x] Campaign CRUD endpoints with request validation
 - [ ] Generate and commit npm lockfile
-- [ ] Run install, typecheck, build, and endpoint smoke tests in a real Node.js runtime
+- [ ] Run install, typecheck, build, migration, and endpoint smoke tests in a real runtime
 - [ ] Inspect VPS runtime, reverse proxy, database, and deployment conventions
-- [ ] Select and implement production database
 - [ ] Authentication and owner role
-- [ ] Dashboard shell/navigation
 
 ## Milestone 2 — Campaign/content
-- [ ] Campaign CRUD
 - [ ] AI provider abstraction and prompts
 - [ ] Draft generation, variants, editing, approval
 - [ ] Media asset references
@@ -54,4 +52,4 @@
 
 Definition of done: code committed, tests pass, deployment documented, result verified. Never mark a job published without verified destination confirmation.
 
-**Current note:** Changes are committed to GitHub, but have not yet been installed, built, or run in a real runtime. VPS inspection and runtime verification remain pending.
+**Current note:** API and initial database files are committed, but have not yet been installed, built, or run in a real runtime. VPS inspection and runtime verification remain pending.
