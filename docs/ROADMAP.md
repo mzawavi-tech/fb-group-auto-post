@@ -2,15 +2,18 @@
 
 ## Milestone 0 — Baseline
 - [x] Dedicated repository created
-- [x] V1 requirements/architecture baseline
+- [x] V1 requirements and architecture baseline
 - [x] Existing VPS reuse and application isolation recorded
-- [ ] Inspect VPS runtime, reverse proxy, database, deployment conventions
 
 ## Milestone 1 — Foundation
-- [ ] Select stack after VPS inspection
-- [ ] Bootstrap app and environment config
+- [x] Initial Node.js 20+ / TypeScript / Express API scaffold committed
+- [x] Environment example and TypeScript configuration
+- [x] Basic API health endpoint
+- [x] Development setup guide
+- [ ] Inspect VPS runtime, reverse proxy, database, and deployment conventions
+- [ ] Install dependencies and run typecheck/build in a real runtime
+- [ ] Select and implement production database
 - [ ] Authentication and owner role
-- [ ] Database migrations and health checks
 - [ ] Dashboard shell/navigation
 
 ## Milestone 2 — Campaign/content
@@ -46,3 +49,5 @@
 - [ ] Acceptance tests and handover
 
 Definition of done: code committed, tests pass, deployment documented, result verified. Never mark a job published without verified destination confirmation.
+
+**Current note:** The API scaffold is committed but has not yet been installed, built, or run in a runtime. VPS inspection is still required before production configuration.
