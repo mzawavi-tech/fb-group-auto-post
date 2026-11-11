@@ -1,28 +1,73 @@
 import "dotenv/config";
-import express from "express";
+import express, { type ErrorRequestHandler } from "express";
 import cors from "cors";
 import helmet from "helmet";
 import pino from "pino";
 import pinoHttp from "pino-http";
+import { env } from "./config/env";
 import { healthRouter } from "./routes/health";
 
-const logger = pino({ level: process.env.LOG_LEVEL ?? "info" });
+const logger = pino({ level: env.LOG_LEVEL });
 const app = express();
 
 app.disable("x-powered-by");
 app.use(helmet());
-app.use(cors({ origin: (process.env.CORS_ORIGIN ?? "http://localhost:5173").split(",") }));
+app.use(cors({
+  origin: env.CORS_ORIGIN.split(",").map((origin) => origin.trim()).filter(Boolean),
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization", "X-Request-Id"]
+}));
 app.use(express.json({ limit: "1mb" }));
 app.use(pinoHttp({ logger }));
 
 app.get("/", (_req, res) => {
-  res.json({ name: "fb-group-auto-post-api", version: "0.1.0", status: "running" });
+  res.status(200).json({
+    name: "fb-group-auto-post-api",
+    version: "0.1.0",
+    status: "running"
+  });
 });
+
 app.use("/api/health", healthRouter);
 
-const port = Number(process.env.PORT ?? 3100);
-const host = process.env.HOST ?? "127.0.0.1";
-
-app.listen(port, host, () => {
-  logger.info({ host, port }, "FB Group Auto Post API started");
+app.use((_req, res) => {
+  res.status(404).json({
+    error: {
+      code: "NOT_FOUND",
+      message: "The requested endpoint does not exist."
+    }
+  });
 });
+
+const errorHandler: ErrorRequestHandler = (error, _req, res, _next) => {
+  logger.error({ err: error }, "Unhandled request error");
+  if (res.headersSent) return;
+  res.status(500).json({
+    error: {
+      code: "INTERNAL_SERVER_ERROR",
+      message: env.NODE_ENV === "production" ? "An unexpected error occurred." : "An unexpected server error occurred."
+    }
+  });
+};
+app.use(errorHandler);
+
+if (require.main === module) {
+  const server = app.listen(env.PORT, env.HOST, () => {
+    logger.info({ host: env.HOST, port: env.PORT }, "FB Group Auto Post API started");
+  });
+
+  const shutdown = (signal: string) => {
+    logger.info({ signal }, "Shutdown requested");
+    server.close((error) => {
+      if (error) {
+        logger.error({ err: error }, "Graceful shutdown failed");
+        process.exitCode = 1;
+      }
+    });
+  };
+
+  process.on("SIGTERM", () => shutdown("SIGTERM"));
+  process.on("SIGINT", () => shutdown("SIGINT"));
+}
+
+export { app };
