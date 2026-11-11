@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { env } from "../config/env";
 
 export const healthRouter = Router();
 
@@ -7,7 +8,8 @@ healthRouter.get("/", (_req, res) => {
     status: "ok",
     service: "fb-group-auto-post-api",
     timestamp: new Date().toISOString(),
-    timezone: process.env.APP_TIMEZONE ?? "Asia/Kuala_Lumpur",
+    uptimeSeconds: Math.floor(process.uptime()),
+    timezone: env.APP_TIMEZONE,
     integrations: {
       metaPublishing: "not_configured",
       facebookGroups: "disabled_pending_capability_verification"
