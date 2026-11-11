@@ -5,13 +5,17 @@
 - [x] V1 requirements and architecture baseline
 - [x] Existing VPS reuse and application isolation recorded
 
-## Milestone 1 — Foundation
-- [x] Initial Node.js 20+ / TypeScript / Express API scaffold committed
-- [x] Environment example and TypeScript configuration
-- [x] Basic API health endpoint
-- [x] Development setup guide
+## Milestone 1 — API foundation
+- [x] Node.js 20+ / TypeScript / Express API scaffold
+- [x] Zod environment validation wired into server startup
+- [x] CORS allowlist and Helmet security headers
+- [x] Structured HTTP request logging
+- [x] JSON 404 and centralized error response
+- [x] Health endpoint with runtime metadata
+- [x] Graceful shutdown handlers
+- [ ] Generate and commit npm lockfile
+- [ ] Run install, typecheck, build, and endpoint smoke tests in a real Node.js runtime
 - [ ] Inspect VPS runtime, reverse proxy, database, and deployment conventions
-- [ ] Install dependencies and run typecheck/build in a real runtime
 - [ ] Select and implement production database
 - [ ] Authentication and owner role
 - [ ] Dashboard shell/navigation
@@ -50,4 +54,4 @@
 
 Definition of done: code committed, tests pass, deployment documented, result verified. Never mark a job published without verified destination confirmation.
 
-**Current note:** The API scaffold is committed but has not yet been installed, built, or run in a runtime. VPS inspection is still required before production configuration.
+**Current note:** Changes are committed to GitHub, but have not yet been installed, built, or run in a real runtime. VPS inspection and runtime verification remain pending.
