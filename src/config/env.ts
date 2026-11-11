@@ -7,7 +7,10 @@ const envSchema = z.object({
   APP_TIMEZONE: z.string().default("Asia/Kuala_Lumpur"),
   CORS_ORIGIN: z.string().default("http://localhost:5173"),
   LOG_LEVEL: z.string().default("info"),
-  DATABASE_URL: z.string().url().optional(),
+  DATABASE_URL: z.preprocess(
+    (value) => value === "" ? undefined : value,
+    z.string().url().optional()
+  ),
   DB_POOL_MAX: z.coerce.number().int().min(1).max(30).default(10),
   DATABASE_SSL: z.enum(["true", "false"]).default("false").transform((value) => value === "true")
 });
