@@ -5,7 +5,9 @@ import helmet from "helmet";
 import pino from "pino";
 import pinoHttp from "pino-http";
 import { env } from "./config/env";
+import { pool } from "./config/database";
 import { healthRouter } from "./routes/health";
+import { campaignsRouter } from "./routes/campaigns";
 
 const logger = pino({ level: env.LOG_LEVEL });
 const app = express();
@@ -29,6 +31,7 @@ app.get("/", (_req, res) => {
 });
 
 app.use("/api/health", healthRouter);
+app.use("/api/campaigns", campaignsRouter);
 
 app.use((_req, res) => {
   res.status(404).json({
@@ -63,6 +66,7 @@ if (require.main === module) {
         logger.error({ err: error }, "Graceful shutdown failed");
         process.exitCode = 1;
       }
+      void pool?.end();
     });
   };
 
